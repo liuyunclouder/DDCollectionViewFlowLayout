@@ -99,6 +99,9 @@
          layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader
          withIndexPath:indexPath];
         headerAttributes.frame = headerFrame;
+        if (headerAttributes.size.width == 0) {
+            headerAttributes.hidden = YES;
+        }
         
         headerHeight = headerFrame.size.height;
         [headerFooterItemAttributes[UICollectionElementKindSectionHeader] addObject:headerAttributes];
@@ -190,7 +193,13 @@
     }
     
     if(section > 0){
-        itemsContentRect.size.height -= sectionRect.origin.y;
+        if ([self.delegate respondsToSelector:@selector(numberOfItemsInSection:)]) {
+            NSUInteger numberOfItems = [self.delegate numberOfItemsInSection:section];
+            if (numberOfItems > 0) {
+                itemsContentRect.size.height -= sectionRect.origin.y;
+            }
+        }
+        
     }
     
     sectionRect.size.height = itemsContentRect.size.height + footerHeight;

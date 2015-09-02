@@ -26,6 +26,9 @@
                      layout:(DDCollectionViewFlowLayout *)layout
    numberOfColumnsInSection:(NSInteger)section;
 
+@optional
+- (NSInteger)numberOfItemsInSection:(NSInteger)section;
+
 @end
 
 
